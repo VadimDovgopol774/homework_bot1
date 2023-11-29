@@ -37,7 +37,7 @@ def send_message(bot: telegram.bot.Bot, message: str) -> None:
     except telegram.error.TelegramError as error:
         raise TelegramError(f'Ошибка отправки статуса в telegram: {error}')
     else:
-        logging.info('Статус отправлен в telegram')
+        logging.debug('Статус отправлен в telegram')
 
 
 def get_api_answer(current_timestamp: int) -> dict:
@@ -161,7 +161,7 @@ def main():
 
 if __name__ == '__main__':
     logging.basicConfig(
-        level=logging.DEBUG,
+        level=logging.INFO,
         handlers=[
             logging.FileHandler(
                 os.path.abspath('main.log'), mode='a', encoding='UTF-8'),
