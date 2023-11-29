@@ -17,7 +17,7 @@ TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
 TELEGRAM_CHAT_ID = os.getenv('TELEGRAM_CHAT_ID')
 
 
-RETRY_TIME = 600
+RETRY_PERIOD = 600
 ENDPOINT = 'https://practicum.yandex.ru/api/user_api/homework_statuses/'
 HEADERS = {'Authorization': f'OAuth {PRACTICUM_TOKEN}'}
 
@@ -84,7 +84,7 @@ def check_response(response: dict) -> list:
         raise EmptyResponseFromAPI('Нет ключа homeworks в ответе API')
     homeworks = response.get('homeworks')
     if not isinstance(homeworks, list):
-        raise KeyError('homeworks не является list')
+        raise TypeError('homeworks не является list')
     return homeworks
 
 
@@ -156,12 +156,12 @@ def main():
                 prev_msg = message
 
         finally:
-            time.sleep(RETRY_TIME)
+            time.sleep(RETRY_PERIOD)
 
 
 if __name__ == '__main__':
     logging.basicConfig(
-        level=logging.INFO,
+        level=logging.DEBUG,
         handlers=[
             logging.FileHandler(
                 os.path.abspath('main.log'), mode='a', encoding='UTF-8'),
