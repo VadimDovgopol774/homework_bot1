@@ -30,6 +30,7 @@ HOMEWORK_STATUSES = {
 
 
 def send_message(bot, message):
+    """Отправка сообщений"""
     try:
         bot.send_message(TELEGRAM_CHAT_ID, message)
         logger.info('Удачная отправка сообщения!')
@@ -40,6 +41,7 @@ def send_message(bot, message):
 
 
 def get_api_answer(current_timestamp):
+    """Возвращаем ответ API"""
     timestamp = current_timestamp or int(time.time())
     params = {'from_date': timestamp}
     try:
@@ -60,6 +62,7 @@ def get_api_answer(current_timestamp):
 
 
 def check_response(response):
+    """Проверка ответа"""
     if not isinstance(response, dict):
         raise TypeError('Ответ не совпадает со словарем')
     if 'homeworks' not in response.keys():
@@ -73,6 +76,7 @@ def check_response(response):
 
 
 def parse_status(homework):
+    """Возвращаем статус ДЗ"""
     if 'homework_name' not in homework:
         raise KeyError('Отсутствует ключ homework_name')
     if 'status' not in homework:
@@ -86,11 +90,13 @@ def parse_status(homework):
 
 
 def check_tokens():
+    """Проверка токенов"""
     if all([PRACTICUM_TOKEN, TELEGRAM_TOKEN, TELEGRAM_CHAT_ID]):
         return True
 
 
 def main():
+    """Основная функция"""
     bot = telegram.Bot(token=TELEGRAM_TOKEN)
     current_timestamp = int(time.time())
     status = ''
