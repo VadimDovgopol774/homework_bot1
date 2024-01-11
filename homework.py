@@ -30,10 +30,7 @@ HOMEWORK_STATUSES = {
 
 
 def send_message(bot, message):
-    """Отправка сообщений.
-    
-    Функция по отправке сообщений.
-    """
+    """Отправка сообщений."""
     try:
         bot.send_message(TELEGRAM_CHAT_ID, message)
         logger.info('Удачная отправка сообщения!')
@@ -44,10 +41,7 @@ def send_message(bot, message):
 
 
 def get_api_answer(current_timestamp):
-    """Возвращаем ответ API.
-    
-    Функция по возврату ответа API.
-    """
+    """Возвращаем ответ API."""
     timestamp = current_timestamp or int(time.time())
     params = {'from_date': timestamp}
     try:
@@ -68,10 +62,7 @@ def get_api_answer(current_timestamp):
 
 
 def check_response(response):
-    """Проверка ответа.
-    
-    Функция по проверке ответа API.
-    """
+    """Проверка ответа."""
     if not isinstance(response, dict):
         raise TypeError('Ответ не совпадает со словарем')
     if 'homeworks' not in response.keys():
@@ -85,10 +76,7 @@ def check_response(response):
 
 
 def parse_status(homework):
-    """Возвращаем статус ДЗ.
-    
-    Функция возвращает статус ДЗ.
-    """
+    """Возвращаем статус ДЗ."""
     if 'homework_name' not in homework:
         raise KeyError('Отсутствует ключ homework_name')
     if 'status' not in homework:
@@ -102,19 +90,13 @@ def parse_status(homework):
 
 
 def check_tokens():
-    """Проверка токенов.
-    
-    Функция по проверке токенов.
-    """
+    """Проверка токенов."""
     if all([PRACTICUM_TOKEN, TELEGRAM_TOKEN, TELEGRAM_CHAT_ID]):
         return True
 
 
 def main():
-    """Основная функция.
-    
-    Тело основной функции.
-    """
+    """Основная функция."""
     bot = telegram.Bot(token=TELEGRAM_TOKEN)
     current_timestamp = int(time.time())
     status = ''
