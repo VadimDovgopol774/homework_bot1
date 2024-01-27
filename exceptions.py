@@ -1,22 +1,18 @@
-class AccessStatusError(Exception):
-    """Ошибка статуса доступа к серверу."""
-
+class WrongResponseCode(Exception):
+    """Неверный ответ API."""
     pass
 
 
-class RequestError(Exception):
-    """Исключение в запросе API."""
-
+class NotForSend(Exception):
+    """Исключение не для пересылки в telegram."""
     pass
 
 
-class EmptyHWList(Exception):
-    """Ошибка списка ДЗ."""
-
+class EmptyResponseFromAPI(NotForSend):
+    """Пустой ответ API."""
     pass
 
 
-class SendError(Exception):
-    """Ошибка отправки сообщения."""
-
+class TelegramError(NotForSend):
+    """Ошибка отправки сообщения в telegram."""
     pass
