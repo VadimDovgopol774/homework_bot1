@@ -114,35 +114,36 @@ def check_tokens() -> bool:
     return all([PRACTICUM_TOKEN, TELEGRAM_TOKEN, TELEGRAM_CHAT_ID])
 
 
-def main(): 
-    """Основная логика работы бота.""" 
-    if not check_tokens(): 
-        logging.critical( 
-            "Отсутствуют обязательные переменные" 
-            " окружения во время запуска бота" 
-        ) 
-        sys.exit( 
-            "Отсутствуют обязательные переменные" 
-            " окружения во время запуска бота" 
-        ) 
-    bot = telegram.Bot(token=TELEGRAM_TOKEN) 
-    timestamp = int(time.time()) 
-    while True: 
-        try: 
-            response = get_api_answer(timestamp) 
-            timestamp = response.get("current_date") 
-            homeworks = check_response(response) 
-            if homeworks: 
-                homework = homeworks[0] 
-                message = parse_status(homework) 
-                if message: 
-                    send_message(bot, message) 
-        except Exception as error: 
-            message = f"Сбой в работе программы: {error}" 
-            logging.error(message) 
+def main():
+    """Основная логика работы бота."""
+    if not check_tokens():
+        logging.critical(
+            "Отсутствуют обязательные переменные"
+            " окружения во время запуска бота"
+        )
+        sys.exit(
+            "Отсутствуют обязательные переменные"
+            " окружения во время запуска бота"
+        )
+    bot = telegram.Bot(token=TELEGRAM_TOKEN)
+    timestamp = int(time.time())
+    while True:
+        try:
+            response = get_api_answer(timestamp)
+            timestamp = response.get("current_date")
+            homeworks = check_response(response)
+            if homeworks:
+                homework = homeworks[0]
+                message = parse_status(homework)
+                if message:
+                    send_message(bot, message)
+        except Exception as error:
+            message = f"Сбой в работе программы: {error}"
+            logging.error(message)
 
-        finally: 
-            time.sleep(RETRY_PERIOD) 
+        finally:
+            time.sleep(RETRY_PERIOD)
+
 
 if __name__ == '__main__':
     logging.basicConfig(
